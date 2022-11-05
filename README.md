@@ -47,3 +47,24 @@ GET /_cat/nodes
 ```
 GET _cat/indices
 ```
+
+## Bulk load
+```
+POST _bulk
+{ "index" : { "_index" : "my-test", "_type" : "my-type", "_id" : "1" } }
+{ "col1" : "val1"}
+{ "index" : { "_index" : "my-test", "_type" : "my-type", "_id" : "2" } }
+{ "col1" : "val2"}
+{ "index" : { "_index" : "my-test", "_type" : "my-type", "_id" : "3" } }
+{ "col1" : "val3" }
+
+GET /my-test
+
+GET /my-test/my-type/1
+```
+
+### Bulk load from file
+```shell
+curl -s -H "Content-Type: application/x-ndjson" -XPOST localhost:9200/_bulk --data-binary "@reqs"; echo
+```
+where _reqs_ if file name with data
